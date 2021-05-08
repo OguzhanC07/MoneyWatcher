@@ -13,6 +13,7 @@ namespace MoneyWatcher.Entities.Concrete
         public string Name { get; set; }
         public double Price { get; set; }
         public bool BudgetType { get; set; }
+        public string Detail { get; set; }
 
         public User User { get; set; }
         public Guid UserId { get; set; }
