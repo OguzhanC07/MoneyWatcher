@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace MoneyWatcher.DataAccess.Concrete.Mapping
 {
     public class UserMap : IEntityTypeConfiguration<User>
+
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
@@ -20,7 +21,8 @@ namespace MoneyWatcher.DataAccess.Concrete.Mapping
             builder.Property(I => I.Password).HasMaxLength(50);
             builder.Property(I => I.FullName).HasMaxLength(50);
 
-            builder.HasMany(I => I.Budgets).WithOne(I=>I.User).HasForeignKey(I=>I.UserId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(I => I.Budgets).WithOne(I => I.User).HasForeignKey(I => I.UserId).OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

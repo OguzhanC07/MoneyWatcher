@@ -19,6 +19,8 @@ namespace MoneyWatcher.DataAccess.Concrete.Mapping
             builder.Property(I => I.Name).HasMaxLength(50);
 
             builder.HasMany(I => I.Budgets).WithOne(I => I.Category).HasForeignKey(I => I.CategoryId).OnDelete(DeleteBehavior.NoAction);
+
         }
     }
+
 }

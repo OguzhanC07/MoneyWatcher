@@ -12,6 +12,7 @@ namespace MoneyWatcher.Entities.Concrete
         public Guid Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+        public string Detail { get; set; }
         public bool BudgetType { get; set; }
         public string Detail { get; set; }
 
@@ -23,5 +24,7 @@ namespace MoneyWatcher.Entities.Concrete
 
         public BudgetDate BudgetDate { get; set; }
         public Guid BudgetDateId { get; set; }
+
+
     }
 }

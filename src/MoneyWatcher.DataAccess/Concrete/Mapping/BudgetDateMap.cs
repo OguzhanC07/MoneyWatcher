@@ -16,7 +16,8 @@ namespace MoneyWatcher.DataAccess.Concrete.Mapping
             builder.Property(I => I.Id).ValueGeneratedOnAdd();
             builder.HasKey(I => I.Id);
 
-            builder.HasOne(I => I.Budget).WithOne(I => I.BudgetDate).HasForeignKey<Budget>(I => I.Id).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(I => I.Budget).WithOne(I => I.BudgetDate).HasForeignKey<BudgetDate>(I => I.BudgetId).OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }
