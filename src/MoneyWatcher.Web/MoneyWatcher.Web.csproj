@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.5" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,6 +26,11 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="ClientApp\public\manifest.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\Api" />
+      <Folder Include="Pages" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
