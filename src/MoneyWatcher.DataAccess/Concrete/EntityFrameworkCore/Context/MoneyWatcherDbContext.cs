@@ -13,7 +13,7 @@ namespace MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("");
+            optionsBuilder.UseSqlServer("Data Source = DESKTOP-T4CKRJ4;Database=MoneyWatcher;uid=sa;pwd=1234;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
