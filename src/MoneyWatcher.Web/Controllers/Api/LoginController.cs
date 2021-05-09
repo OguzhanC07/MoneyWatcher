@@ -6,16 +6,16 @@ namespace MoneyWatcher.Web.Controllers.Api
     [ApiController]
     public class LoginController : ControllerBase
     {
-        // [HttpPost]
-        // public IActionResult Login()
-        // {
-        //     return Ok(new {Ahmet="123",Number=123});
-        // }
-        //
-        // [HttpGet("[action]")]
-        // public IActionResult Register()
-        // {
-        //     return Ok(new {Ahmet="Register",Number=123});
-        // }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return Ok(new {Ahmet="123",Number=123});
+        }
+        
+        [HttpGet("[action]")]
+        public IActionResult Register()
+        {
+            return Ok(new {Ahmet="Register",Number=123});
+        }
     }
 }
