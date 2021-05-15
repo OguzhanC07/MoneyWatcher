@@ -5,7 +5,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\MoneyWatcher.DataAccess\MoneyWatcher.DataAccess.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DTOs\BudgetDTO\" />
+      <Folder Include="DTOs\CategoryDTO\" />
+      <Folder Include="DTOs\BudgetDateDTO\" />
     </ItemGroup>
 
 </Project>

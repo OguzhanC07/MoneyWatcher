@@ -13,7 +13,7 @@ namespace MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-NDB2B06\\SQLEXPRESS; Database=MoneyWatcher;uid=sa;pwd=1234;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-6KNLK68\\SQLEXPRESS; Database=MoneyWatcher;uid=sa;pwd=1234;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

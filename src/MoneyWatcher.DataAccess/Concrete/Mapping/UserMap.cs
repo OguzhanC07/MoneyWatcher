@@ -18,7 +18,7 @@ namespace MoneyWatcher.DataAccess.Concrete.Mapping
             builder.HasKey(I => I.Id);
 
             builder.Property(I => I.Email).HasMaxLength(150);
-            builder.Property(I => I.Password).HasMaxLength(50);
+            builder.Property(I => I.Password).HasMaxLength(150);
             builder.Property(I => I.FullName).HasMaxLength(50);
 
             builder.HasMany(I => I.Budgets).WithOne(I => I.User).HasForeignKey(I => I.UserId).OnDelete(DeleteBehavior.NoAction);
