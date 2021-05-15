@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MoneyWatcher.Businness.DTOs.UserDTO
 {
-    class SingInDTO
+    public class LoginDTO
     {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

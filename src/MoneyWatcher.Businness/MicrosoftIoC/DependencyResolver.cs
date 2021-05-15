@@ -5,6 +5,7 @@ using MoneyWatcher.Businness.Abstract;
 using MoneyWatcher.Businness.Concrete;
 using MoneyWatcher.Businness.DTOs.UserDTO;
 using MoneyWatcher.Businness.FluentValidation;
+using MoneyWatcher.Businness.JwtTools;
 using MoneyWatcher.DataAccess.Abstract;
 using MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 
@@ -28,6 +29,10 @@ namespace MoneyWatcher.Businness.MicrosoftIoC
             services.AddScoped<ICategoryDal, CategoryRepository>();
 
             services.AddTransient<IValidator<RegisterDTO>, RegisterDTOValidation>();
+            services.AddTransient<IValidator<LoginDTO>, LoginDTOValidation>();
+
+            services.AddScoped<IJwtService, JwtManager>();
+
         }
     }
 }

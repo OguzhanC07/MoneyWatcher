@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyWatcher.Businness.Abstract;
 using MoneyWatcher.Businness.DTOs.UserDTO;
+using MoneyWatcher.Businness.JwtTools;
 using MoneyWatcher.Entities.Concrete;
 using MoneyWatcher.Web.Models;
 
@@ -18,14 +19,15 @@ namespace MoneyWatcher.Web.Controllers.Api
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-
-        public AuthController(IUserService userService, IMapper mapper)
+        private readonly IJwtService _jwtService;
+        public AuthController(IUserService userService, IMapper mapper, IJwtService jwtService)
         {
             _userService = userService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
             registerDTO.Password = BCrypt.Net.BCrypt.HashPassword(registerDTO.Password);
@@ -34,32 +36,24 @@ namespace MoneyWatcher.Web.Controllers.Api
             return Created("", registerDTO);
         }
 
-        
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        {
+            var user=await _userService.LoginValidate(loginDTO);
+            if (user != null)
+            {
+                var token = _jwtService.GenerateToken(user);
+
+                return Ok(token);
+            }
+            else
+            {
+                return BadRequest(new { Message="Mail and Password Wrong."});
+            }
+
+        }
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> SignUp(RegisterModel registerModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
 
-        //        BCrypt.Net.BCrypt.HashPassword(registerModel.Password);
-        //        await _userService.AddAsync(new Entities.Concrete.User
-        //        {
-        //            Password = BCrypt.Net.BCrypt.HashPassword(registerModel.Password),
-        //            Email = registerModel.Email,
-        //            FullName = registerModel.FullName
-        //        });
-        //        return Created("", registerModel);
-        //    }
-        //    else
-        //    {
-        //        var errors = ModelState.Select(x => x.Value.Errors)
-        //                   .Where(y => y.Count > 0)
-        //                   .ToList();
-        //        return BadRequest(errors);
-        //    }
-
-        //}
     }
 }
