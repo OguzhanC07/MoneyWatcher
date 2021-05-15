@@ -9,13 +9,12 @@ namespace MoneyWatcher.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BudgetController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Register()
         {
-            //budgetlar getirildi
-            return Ok(new {Budget = "Budget1", Price = "120"});
+            
+            return Ok();
         }
     }
 }

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace MoneyWatcher.Businness.Abstract
 {
-    public interface IGenericService<T,TId> where T:class,IEntity,new()
+    public interface IGenericService<T, in TId> 
+        where T:class,IEntity,new()
     {
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);

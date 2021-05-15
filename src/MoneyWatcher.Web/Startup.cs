@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MoneyWatcher.Businness.Abstract;
+using MoneyWatcher.Businness.Concrete;
+using MoneyWatcher.Businness.MicrosoftIoC;
 
 namespace MoneyWatcher.Web
 {
@@ -21,6 +24,7 @@ namespace MoneyWatcher.Web
         {
             services.AddControllersWithViews();
             services.AddCors();
+            services.AddDependicies();
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
