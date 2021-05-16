@@ -50,7 +50,9 @@ namespace MoneyWatcher.Web
             }
 
             app.UseHttpsRedirection();
-            app.UseCors();
+            app.UseCors(
+	            x=> x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+	            );
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
