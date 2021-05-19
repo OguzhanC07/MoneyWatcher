@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoneyWatcher.Businness.Abstract;
-using MoneyWatcher.Businness.DTOs.UserDTO;
 using MoneyWatcher.Businness.JwtTools;
+using MoneyWatcher.Businness.Utils.Dtos.UserDto;
+using MoneyWatcher.Businness.Utils.ResponseMessage;
 using MoneyWatcher.Entities.Concrete;
-using MoneyWatcher.Web.Models;
 
 namespace MoneyWatcher.Web.Controllers.Api
 {
@@ -28,32 +24,20 @@ namespace MoneyWatcher.Web.Controllers.Api
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register(RegisterDTO registerDTO)
+        public async Task<IActionResult> Register(RegisterDto registerDto)
         {
-            registerDTO.Password = BCrypt.Net.BCrypt.HashPassword(registerDTO.Password);
-            await _userService.AddAsync(_mapper.Map<User>(registerDTO));
-
-            return Created("", registerDTO);
+            registerDto.Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+            await _userService.AddAsync(_mapper.Map<User>(registerDto));
+            return Ok(ResponseCreater.CreateResponse(true,"Added Succesfully",null));
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            var user=await _userService.LoginValidate(loginDTO);
-            if (user != null)
-            {
-                var token = _jwtService.GenerateToken(user);
-
-                return Ok(token);
-            }
-            else
-            {
-                return BadRequest(new { Message="Mail and Password Wrong."});
-            }
-
+            var user=await _userService.LoginValidate(loginDto);
+            if (user == null) return Ok(ResponseCreater.CreateResponse(false, "Username or password is wrong", null));
+            var token = _jwtService.GenerateToken(user);
+            return Ok(ResponseCreater.CreateResponse(true,"Login Successfully",token));
         }
-
-
-
     }
 }

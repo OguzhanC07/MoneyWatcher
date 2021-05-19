@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using MoneyWatcher.Businness.DTOs.UserDTO;
 using MoneyWatcher.Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MoneyWatcher.Businness.Utils.Dtos.UserDto;
 
 namespace MoneyWatcher.Web.Mapping
 {
@@ -12,8 +8,11 @@ namespace MoneyWatcher.Web.Mapping
     {
         public MapProfile()
         {
-            CreateMap<User, RegisterDTO>();
-            CreateMap<RegisterDTO, User>();
+            CreateMap<User, RegisterDto>();
+            CreateMap<RegisterDto, User>();
+
+            CreateMap<User, LoginDto>();
+            CreateMap<LoginDto, User>();
 
 
         }

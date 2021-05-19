@@ -5,9 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
-using MoneyWatcher.Businness.Abstract;
-using MoneyWatcher.Businness.Concrete;
-using MoneyWatcher.Businness.MicrosoftIoC;
+using MoneyWatcher.Businness.Utils.MicrosoftIoC;
 
 namespace MoneyWatcher.Web
 {
@@ -27,7 +25,7 @@ namespace MoneyWatcher.Web
 
             services.AddControllersWithViews().AddFluentValidation();
             services.AddCors();
-            services.AddDependicies();
+            services.AddDependency();
            
 
             // In production, the React files will be served from this directory

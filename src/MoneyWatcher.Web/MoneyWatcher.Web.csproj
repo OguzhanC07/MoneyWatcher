@@ -33,6 +33,7 @@
 
     <ItemGroup>
       <Folder Include="Controllers\Api" />
+      <Folder Include="Models" />
     </ItemGroup>
 
     <ItemGroup>

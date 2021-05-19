@@ -13,8 +13,7 @@ namespace MoneyWatcher.Web.Controllers
             var client = new HttpClient {BaseAddress = new Uri("https://localhost:44311/")};
             var response = await client.GetAsync("api/login");
             var jsonResponse = await  response.Content.ReadAsStringAsync();
-            
-            return View();
+            return Ok();
         }
     }
 }

@@ -1,16 +1,11 @@
 ﻿using FluentValidation;
-using MoneyWatcher.Businness.DTOs.UserDTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MoneyWatcher.Businness.Utils.Dtos.UserDto;
 
-namespace MoneyWatcher.Businness.FluentValidation
+namespace MoneyWatcher.Businness.Utils.FluentValidation
 {
-    public class LoginDTOValidation: AbstractValidator<LoginDTO>
+    public class LoginDtoValidation: AbstractValidator<LoginDto>
     {
-        public LoginDTOValidation()
+        public LoginDtoValidation()
         {
             RuleFor(I => I.Email).NotEmpty().WithMessage("Email can not be empty");
             RuleFor(I => I.Email).NotNull().WithMessage("Email can not be null");

@@ -13,10 +13,4 @@
       <ProjectReference Include="..\MoneyWatcher.DataAccess\MoneyWatcher.DataAccess.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="DTOs\BudgetDTO\" />
-      <Folder Include="DTOs\CategoryDTO\" />
-      <Folder Include="DTOs\BudgetDateDTO\" />
-    </ItemGroup>
-
 </Project>
