@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MoneyWatcher.Entities.Concrete;
 using MoneyWatcher.Businness.Utils.Dtos.UserDto;
+using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
+using MoneyWatcher.Businness.Utils.Dtos.BudgetDateDto;
 
 namespace MoneyWatcher.Web.Mapping
 {
@@ -10,11 +12,15 @@ namespace MoneyWatcher.Web.Mapping
         {
             CreateMap<User, RegisterDto>();
             CreateMap<RegisterDto, User>();
-
+            
             CreateMap<User, LoginDto>();
             CreateMap<LoginDto, User>();
 
+            CreateMap<Budget, BudgetUpdateDto>();
+            CreateMap<BudgetUpdateDto, Budget>();
 
+            CreateMap<BudgetDate, BudgetDateUpdateDto>();
+            CreateMap<BudgetDateUpdateDto, BudgetDate>();
         }
     }
 }
