@@ -14,8 +14,9 @@ namespace MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 	        //optionsBuilder.UseSqlServer("Server=DESKTOP-NDB2B06\\SQLEXPRESS; Database=MoneyWatcher;uid=sa;pwd=1234;");
-	        optionsBuilder.UseSqlServer("Server=DESKTOP-T4CKRJ4; Database=MoneyWatcher;uid=sa;pwd=1234;");
-	        //optionsBuilder.UseSqlServer("Server =(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=True;Database=MoneyWatcher");
+	        //optionsBuilder.UseSqlServer("Server=DESKTOP-T4CKRJ4; Database=MoneyWatcher;uid=sa;pwd=1234;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-6KNLK68\\SQLEXPRESS; Database=MoneyWatcher;uid=sa;pwd=1234;");
+            //optionsBuilder.UseSqlServer("Server =(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=True;Database=MoneyWatcher");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -14,7 +14,7 @@ namespace MoneyWatcher.Entities.Concrete
         public double Price { get; set; }
         public string Detail { get; set; }
         public bool BudgetType { get; set; }
-        public bool IsDeleted { get; set; }
+       // public bool IsDeleted { get; set; }
 
         public User User { get; set; }
         public Guid UserId { get; set; }

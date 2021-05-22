@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -5,6 +6,7 @@ using MoneyWatcher.Businness.Abstract;
 using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
 using MoneyWatcher.Businness.Utils.ResponseMessage;
 using MoneyWatcher.Entities.Concrete;
+using MoneyWatcher.Web.Models;
 
 namespace MoneyWatcher.Web.Controllers.Api
 {
@@ -36,5 +38,13 @@ namespace MoneyWatcher.Web.Controllers.Api
             return Ok(ResponseCreater.CreateResponse(true, "Update successfully", budget));
         }
         //_mapper.Map<Budget>(budget)
+
+      [HttpDelete]
+      public async Task<IActionResult> DeleteBudget(DeleteModel deleteModel)
+        {
+            var findbudget = await _budgetService.GetByIdAsync(deleteModel.Id);
+            await _budgetService.DeleteAsync(findbudget);            
+            return Ok(ResponseCreater.CreateResponse(true, "Delete successfully", null ));
+        }
     }
 }
