@@ -25,9 +25,6 @@ namespace MoneyWatcher.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BudgetDateId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("BudgetType")
                         .HasColumnType("bit");
 
@@ -49,9 +46,6 @@ namespace MoneyWatcher.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BudgetDateId")
-                        .IsUnique();
 
                     b.HasIndex("CategoryId");
 
@@ -79,6 +73,9 @@ namespace MoneyWatcher.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BudgetId")
+                        .IsUnique();
 
                     b.ToTable("BudgetDates");
                 });
@@ -126,12 +123,6 @@ namespace MoneyWatcher.DataAccess.Migrations
 
             modelBuilder.Entity("MoneyWatcher.Entities.Concrete.Budget", b =>
                 {
-                    b.HasOne("MoneyWatcher.Entities.Concrete.BudgetDate", "BudgetDate")
-                        .WithOne("Budget")
-                        .HasForeignKey("MoneyWatcher.Entities.Concrete.Budget", "BudgetDateId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("MoneyWatcher.Entities.Concrete.Category", "Category")
                         .WithMany("Budgets")
                         .HasForeignKey("CategoryId")
@@ -144,8 +135,6 @@ namespace MoneyWatcher.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("BudgetDate");
-
                     b.Navigation("Category");
 
                     b.Navigation("User");
@@ -153,7 +142,18 @@ namespace MoneyWatcher.DataAccess.Migrations
 
             modelBuilder.Entity("MoneyWatcher.Entities.Concrete.BudgetDate", b =>
                 {
+                    b.HasOne("MoneyWatcher.Entities.Concrete.Budget", "Budget")
+                        .WithOne("BudgetDate")
+                        .HasForeignKey("MoneyWatcher.Entities.Concrete.BudgetDate", "BudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Budget");
+                });
+
+            modelBuilder.Entity("MoneyWatcher.Entities.Concrete.Budget", b =>
+                {
+                    b.Navigation("BudgetDate");
                 });
 
             modelBuilder.Entity("MoneyWatcher.Entities.Concrete.Category", b =>

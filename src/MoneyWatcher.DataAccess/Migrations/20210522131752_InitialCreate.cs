@@ -8,21 +8,6 @@ namespace MoneyWatcher.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BudgetDates",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FinishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Frequency = table.Column<int>(type: "int", nullable: false),
-                    BudgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BudgetDates", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
                 {
@@ -42,7 +27,7 @@ namespace MoneyWatcher.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    Password = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,17 +44,11 @@ namespace MoneyWatcher.DataAccess.Migrations
                     Detail = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     BudgetType = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    BudgetDateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Budgets", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Budgets_BudgetDates_BudgetDateId",
-                        column: x => x.BudgetDateId,
-                        principalTable: "BudgetDates",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Budgets_Category_CategoryId",
                         column: x => x.CategoryId,
@@ -82,10 +61,31 @@ namespace MoneyWatcher.DataAccess.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BudgetDates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FinishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Frequency = table.Column<int>(type: "int", nullable: false),
+                    BudgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BudgetDates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BudgetDates_Budgets_BudgetId",
+                        column: x => x.BudgetId,
+                        principalTable: "Budgets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_Budgets_BudgetDateId",
-                table: "Budgets",
-                column: "BudgetDateId",
+                name: "IX_BudgetDates_BudgetId",
+                table: "BudgetDates",
+                column: "BudgetId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -102,10 +102,10 @@ namespace MoneyWatcher.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Budgets");
+                name: "BudgetDates");
 
             migrationBuilder.DropTable(
-                name: "BudgetDates");
+                name: "Budgets");
 
             migrationBuilder.DropTable(
                 name: "Category");

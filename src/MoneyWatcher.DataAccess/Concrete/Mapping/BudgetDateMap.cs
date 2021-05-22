@@ -15,6 +15,7 @@ namespace MoneyWatcher.DataAccess.Concrete.Mapping
         {
             builder.Property(I => I.Id).ValueGeneratedOnAdd();
             builder.HasKey(I => I.Id);
+            
 
         }
     }

@@ -22,6 +22,6 @@ namespace MoneyWatcher.Entities.Concrete
         public int CategoryId { get; set; }
 
         public BudgetDate BudgetDate { get; set; }
-        public Guid BudgetDateId { get; set; }
+        
     }
 }
