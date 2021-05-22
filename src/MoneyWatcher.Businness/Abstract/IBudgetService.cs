@@ -9,5 +9,6 @@ namespace MoneyWatcher.Businness.Abstract
 {
     public interface IBudgetService:IGenericService<Budget,Guid>
     {
+        public Task AddBudget(Budget budget);
     }
 }
