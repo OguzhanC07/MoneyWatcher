@@ -9,6 +9,7 @@ using MoneyWatcher.Businness.Utils.MicrosoftIoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MoneyWatcher.Businness.JwtTools;
+using Newtonsoft.Json;
 
 namespace MoneyWatcher.Web
 {
@@ -26,7 +27,10 @@ namespace MoneyWatcher.Web
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllersWithViews().AddFluentValidation();
+            services.AddControllersWithViews().AddFluentValidation().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddCors();
             services.AddDependency();
            

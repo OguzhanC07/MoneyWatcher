@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MoneyWatcher.Businness.Abstract;
+using MoneyWatcher.Businness.Utils.ResponseMessage;
 using MoneyWatcher.Entities.Concrete;
 
 namespace MoneyWatcher.Web.Controllers.Api
@@ -10,7 +11,6 @@ namespace MoneyWatcher.Web.Controllers.Api
     public class BudgetController : ControllerBase
     {
         private readonly IBudgetService _budgetService;
-
         public BudgetController(IBudgetService budgetService)
         {
             _budgetService = budgetService;
@@ -19,8 +19,8 @@ namespace MoneyWatcher.Web.Controllers.Api
         [HttpPost]
         public async Task<IActionResult> AddBudget(Budget budget)
         {
-            await _budgetService.AddBudget(budget);
-            return Ok();
+            await _budgetService.AddAsync(budget);
+            return Ok(ResponseCreater.CreateResponse(true,"Added successfully", budget));
         }
     }
 }

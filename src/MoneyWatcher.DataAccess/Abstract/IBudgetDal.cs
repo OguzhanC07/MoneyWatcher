@@ -6,6 +6,5 @@ namespace MoneyWatcher.DataAccess.Abstract
 {
     public interface IBudgetDal : IGenericDal<Budget,Guid>
     {
-        public Task AddBudget(Budget budget);
     }
 }
