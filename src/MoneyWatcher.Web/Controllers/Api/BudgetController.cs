@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyWatcher.Businness.Abstract;
 using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
@@ -12,6 +14,7 @@ namespace MoneyWatcher.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BudgetController : ControllerBase
     {
         private readonly IBudgetService _budgetService;
@@ -30,14 +33,22 @@ namespace MoneyWatcher.Web.Controllers.Api
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBudget(BudgetUpdateDto budget)
+        public async Task<IActionResult> UpdateBudget(BudgetUpdateDto updateDto)
         {
-            var findBudget = await _budgetService.GetByIdAsync(budget.Id);
-            findBudget.BudgetDate = _mapper.Map<BudgetDate>(budget.BudgetDate);
+            var findBudget = await _budgetService.GetBudgetWithDate(updateDto.Id);
+
+            findBudget.BudgetDate.IsMonthly= updateDto.BudgetDate.IsMontly;
+            findBudget.BudgetDate.StartDate = updateDto.BudgetDate.StartDate;
+            findBudget.BudgetDate.FinishDate = updateDto.BudgetDate.FinishDate;
+            findBudget.Detail = updateDto.Detail;
+            findBudget.Name = updateDto.Name;
+            findBudget.Price = updateDto.Price;
+            findBudget.CategoryId = updateDto.CategoryId;
+            findBudget.BudgetType = updateDto.BudgetType;
+            
             await _budgetService.UpdateAsync(findBudget);
-            return Ok(ResponseCreater.CreateResponse(true, "Update successfully", budget));
+            return Ok(ResponseCreater.CreateResponse(true,"Delete successfully",updateDto));
         }
-        //_mapper.Map<Budget>(budget)
 
       [HttpDelete]
       public async Task<IActionResult> DeleteBudget(DeleteModel deleteModel)

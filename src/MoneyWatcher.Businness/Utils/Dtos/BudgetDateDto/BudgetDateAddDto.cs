@@ -2,10 +2,10 @@
 
 namespace MoneyWatcher.Businness.Utils.Dtos.BudgetDateDto
 {
-    public class BudgetDateUpdateDto
+    public class BudgetDateAddDto
     {
         public DateTime StartDate { get; set; }
         public DateTime? FinishDate { get; set; }
-        public bool IsMontly { get; set; } 
+        public bool IsMontly { get; set; }
     }
 }

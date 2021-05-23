@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -27,7 +29,12 @@ namespace MoneyWatcher.Web
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllersWithViews().AddFluentValidation().AddNewtonsoftJson(options =>
+            services.AddControllersWithViews()
+                .AddFluentValidation(options =>
+                {
+                    options.ImplicitlyValidateChildProperties = true;
+                })
+                .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
@@ -38,20 +45,17 @@ namespace MoneyWatcher.Web
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
 
-            services.AddAuthentication(x =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-
-                options.TokenValidationParameters = new TokenValidationParameters
+                opt.RequireHttpsMetadata = false;
+                opt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateAudience = true,
-                    ValidateIssuer = true,
                     ValidIssuer = JwtConstants.Issuer,
                     ValidAudience = JwtConstants.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConstants.SecretKey)),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
         }
@@ -74,12 +78,14 @@ namespace MoneyWatcher.Web
             app.UseCors(
 	            x=> x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
 	            );
-            app.UseAuthentication();
+
+
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

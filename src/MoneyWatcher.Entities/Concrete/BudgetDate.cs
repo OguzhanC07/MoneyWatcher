@@ -11,12 +11,10 @@ namespace MoneyWatcher.Entities.Concrete
     {
         public Guid Id { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
-        public int Frequency { get; set; }
+        public DateTime? FinishDate { get; set; }
+        public bool IsMonthly { get; set; }
 
         public Budget Budget { get; set; }
         public Guid BudgetId { get; set; }
-
-        
     }
 }

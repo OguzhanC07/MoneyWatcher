@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using MoneyWatcher.Businness.Utils.Dtos.BudgetDateDto;
 using MoneyWatcher.Entities.Concrete;
 
 namespace MoneyWatcher.Businness.Utils.Dtos.BudgetDto
@@ -11,6 +13,6 @@ namespace MoneyWatcher.Businness.Utils.Dtos.BudgetDto
         public bool BudgetType { get; set; }
         public Guid UserId { get; set; }
         public int CategoryId { get; set; }
-        public BudgetDate BudgetDate { get; set; }
+        public BudgetDateAddDto BudgetDate { get; set; }
     }
 }

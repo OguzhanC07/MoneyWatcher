@@ -19,8 +19,14 @@ namespace MoneyWatcher.Web.Mapping
             CreateMap<Budget, BudgetUpdateDto>();
             CreateMap<BudgetUpdateDto, Budget>();
 
+            CreateMap<Budget, BudgetAddDto>();
+            CreateMap<BudgetAddDto, Budget>();
+
             CreateMap<BudgetDate, BudgetDateUpdateDto>();
             CreateMap<BudgetDateUpdateDto, BudgetDate>();
+
+            CreateMap<BudgetDate, BudgetDateAddDto>();
+            CreateMap<BudgetDateAddDto, BudgetDate>();
         }
     }
 }

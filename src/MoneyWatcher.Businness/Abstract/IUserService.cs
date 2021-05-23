@@ -11,5 +11,6 @@ namespace MoneyWatcher.Businness.Abstract
     public interface IUserService:IGenericService<User,Guid>
     {
         public  Task<User> LoginValidate(LoginDto loginDto);
+        public Task<User> FindUserByEmail(string email);
     }
 }

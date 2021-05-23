@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Context;
 
 namespace MoneyWatcher.DataAccess.Migrations
 {
     [DbContext(typeof(MoneyWatcherDbContext))]
-    partial class MoneyWatcherDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210523145429_UpdateOnBudgetDate")]
+    partial class UpdateOnBudgetDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,8 +68,8 @@ namespace MoneyWatcher.DataAccess.Migrations
                     b.Property<DateTime?>("FinishDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsMonthly")
-                        .HasColumnType("bit");
+                    b.Property<int>("Frequency")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -105,24 +107,18 @@ namespace MoneyWatcher.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Users");
                 });

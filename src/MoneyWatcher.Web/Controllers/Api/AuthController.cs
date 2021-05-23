@@ -26,6 +26,8 @@ namespace MoneyWatcher.Web.Controllers.Api
         [HttpPost("[action]")]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
+            var user = await _userService.FindUserByEmail(registerDto.Email);
+            if (user != null) return Ok(ResponseCreater.CreateResponse(false, "Email is already taken", null));
             registerDto.Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
             await _userService.AddAsync(_mapper.Map<User>(registerDto));
             return Ok(ResponseCreater.CreateResponse(true,"Added Succesfully",null));

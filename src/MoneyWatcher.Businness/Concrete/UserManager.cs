@@ -24,8 +24,12 @@ namespace MoneyWatcher.Businness.Concrete
             {
                 return null;
             }
-
             return !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password) ? null : user;
+        }
+
+        public async Task<User> FindUserByEmail(string email)
+        {
+            return await _genericDal.GetByFilter(I => I.Email == email);
         }
 
     }
