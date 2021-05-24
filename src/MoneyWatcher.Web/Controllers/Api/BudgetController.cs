@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,6 +13,7 @@ using MoneyWatcher.Businness.Abstract;
 using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
 using MoneyWatcher.Businness.Utils.ResponseMessage;
 using MoneyWatcher.Entities.Concrete;
+using MoneyWatcher.Web.CustomFilters;
 using MoneyWatcher.Web.Models;
 
 namespace MoneyWatcher.Web.Controllers.Api
@@ -30,10 +33,11 @@ namespace MoneyWatcher.Web.Controllers.Api
         }
 
         [HttpGet("[action]")]
+        //[ServiceFilter(typeof(ValidId<Budget,Guid>))]
         public async Task<IActionResult> GetBudget(IdModel model)
         {
             var budget=await _budgetService.GetBudgetWithDate(model.Id);
-            return Ok(ResponseCreater.CreateResponse(true,"Operation completed successfully",_mapper.Map<BudgetAddDto>(budget)));
+            return Ok(ResponseCreater.CreateResponse(true,"Operation completed successfully",_mapper.Map<BudgetDetailDto>(budget)));
         }
 
         [HttpGet]
@@ -44,8 +48,6 @@ namespace MoneyWatcher.Web.Controllers.Api
 
             return Ok(ResponseCreater.CreateResponse(true,"Your operation completed successfully",result));
         }
-        
-        
         
         [HttpPost]
         public async Task<IActionResult> AddBudget(BudgetAddDto budget)

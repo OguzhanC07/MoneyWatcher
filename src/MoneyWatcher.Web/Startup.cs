@@ -9,8 +9,10 @@ using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
 using MoneyWatcher.Businness.Utils.MicrosoftIoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MoneyWatcher.Businness.JwtTools;
+using MoneyWatcher.Web.CustomFilters;
 using Newtonsoft.Json;
 
 namespace MoneyWatcher.Web
@@ -29,15 +31,26 @@ namespace MoneyWatcher.Web
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllersWithViews()
+            services.AddScoped(typeof(ValidId<,>));
+            
+            services.AddControllersWithViews(options =>
+                {
+                    options.Filters.Add(typeof(ValidateModelStateAttribute));
+                })
                 .AddFluentValidation(options =>
                 {
                     options.ImplicitlyValidateChildProperties = true;
                 })
                 .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
+
+            services.Configure<ApiBehaviorOptions>(opt =>
             {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                opt.SuppressModelStateInvalidFilter = true;
             });
+            
             services.AddCors();
             services.AddDependency();
            

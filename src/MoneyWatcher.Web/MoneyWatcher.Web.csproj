@@ -33,10 +33,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\Api" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\MoneyWatcher.Businness\MoneyWatcher.Businness.csproj" />
     </ItemGroup>
 

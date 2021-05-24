@@ -3,6 +3,7 @@ using MoneyWatcher.Entities.Concrete;
 using MoneyWatcher.Businness.Utils.Dtos.UserDto;
 using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
 using MoneyWatcher.Businness.Utils.Dtos.BudgetDateDto;
+using MoneyWatcher.Businness.Utils.Dtos.CategoryDto;
 
 namespace MoneyWatcher.Web.Mapping
 {
@@ -33,6 +34,9 @@ namespace MoneyWatcher.Web.Mapping
 
             CreateMap<BudgetDate, BudgetDateAddDto>();
             CreateMap<BudgetDateAddDto, BudgetDate>();
+
+            CreateMap<Category, CategoryDetailDto>();
+            CreateMap<CategoryDetailDto, Category>();
         }
     }
 }
