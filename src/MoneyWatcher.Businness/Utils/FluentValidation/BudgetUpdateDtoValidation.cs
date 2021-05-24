@@ -3,9 +3,9 @@ using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
 
 namespace MoneyWatcher.Businness.Utils.FluentValidation
 {
-    public class BudgetAddDtoValidation : AbstractValidator<BudgetAddDto>
+    public class BudgetUpdateDtoValidation : AbstractValidator<BudgetUpdateDto>
     {
-        public BudgetAddDtoValidation()
+        public BudgetUpdateDtoValidation()
         {
             RuleFor(I => I.Name).NotEmpty().WithMessage("Name required");
             RuleFor(I => I.Name).Length(1, 50)
@@ -17,7 +17,7 @@ namespace MoneyWatcher.Businness.Utils.FluentValidation
 
             RuleFor(I => I.Price).NotEmpty().WithMessage("Price must be not empty");
 
-           // RuleFor(I => I.UserId).NotEmpty().WithMessage("User Id must not be empty");
+            // RuleFor(I => I.UserId).NotEmpty().WithMessage("User Id must not be empty");
             RuleFor(I => I.BudgetDate).NotNull().NotEmpty().WithMessage("BudgetDate cannot be null");
             When(I => I.BudgetDate != null, () =>
             {

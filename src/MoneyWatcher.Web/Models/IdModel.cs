@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MoneyWatcher.Web.Models
 {
-    public class DeleteModel
+    public class IdModel
     {
         public Guid Id { get; set; }
     }

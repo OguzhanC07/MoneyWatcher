@@ -31,6 +31,7 @@ namespace MoneyWatcher.Businness.Utils.MicrosoftIoC
             services.AddTransient<IValidator<RegisterDto>, RegisterDtoValidation>();
             services.AddTransient<IValidator<LoginDto>, LoginDtoValidation>();
             services.AddTransient<IValidator<BudgetAddDto>, BudgetAddDtoValidation>();
+            services.AddTransient<IValidator<BudgetUpdateDto>,BudgetUpdateDtoValidation>();
 
             services.AddScoped<IJwtService, JwtManager>();
         }
