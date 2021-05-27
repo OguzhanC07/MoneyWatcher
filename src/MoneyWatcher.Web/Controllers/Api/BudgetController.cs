@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyWatcher.Businness.Abstract;
+using MoneyWatcher.Businness.Utils.Dtos.BudgetDateDto;
 using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
 using MoneyWatcher.Businness.Utils.ResponseMessage;
 using MoneyWatcher.Entities.Concrete;
@@ -33,7 +34,6 @@ namespace MoneyWatcher.Web.Controllers.Api
         }
 
         [HttpGet("[action]")]
-        //[ServiceFilter(typeof(ValidId<Budget,Guid>))]
         public async Task<IActionResult> GetBudget(IdModel model)
         {
             var budget=await _budgetService.GetBudgetWithDate(model.Id);
@@ -44,10 +44,27 @@ namespace MoneyWatcher.Web.Controllers.Api
         public async Task<IActionResult> GetBudgets()
         {
             var result = _mapper.Map<List<BudgetDetailDto>>(
-                await _budgetService.GetThisMonthBudgetsAsync(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))));
+                await _budgetService.GetSelectedDateBudgetsAsync(
+                    new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    ,DateTime.Now.Month
+                    ,DateTime.Now.Year));
 
             return Ok(ResponseCreater.CreateResponse(true,"Your operation completed successfully",result));
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetBudgetsWithDate(DateDto date)
+        {
+            var result = _mapper.Map<List<BudgetDetailDto>>(
+                await _budgetService.GetSelectedDateBudgetsAsync(
+                    new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    ,date.MonthNum
+                    ,date.YearNum));
+            return Ok(ResponseCreater.CreateResponse(true, "Your operation completed successfully", result));
+        }
+        
+        
+        
         
         [HttpPost]
         public async Task<IActionResult> AddBudget(BudgetAddDto budget)

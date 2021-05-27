@@ -9,6 +9,6 @@ namespace MoneyWatcher.Businness.Abstract
     public interface IBudgetService:IGenericService<Budget,Guid>
     {
         public Task<Budget> GetBudgetWithDate(Guid id);
-        public Task<List<Budget>> GetThisMonthBudgetsAsync(Guid id);
+        public  Task<List<Budget>> GetSelectedDateBudgetsAsync(Guid id, int month, int year);
     }
 }

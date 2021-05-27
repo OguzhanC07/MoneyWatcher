@@ -31,7 +31,7 @@ namespace MoneyWatcher.Web
         {
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped(typeof(ValidId<,>));
+            services.AddScoped(typeof(ValidId<,,>));
             
             services.AddControllersWithViews(options =>
                 {

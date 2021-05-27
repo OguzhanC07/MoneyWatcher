@@ -7,7 +7,7 @@ namespace MoneyWatcher.DataAccess.Abstract
 {
     public interface IBudgetDal : IGenericDal<Budget,Guid>
     {
-        public Task<List<Budget>> GetThisMonthBudgetsAsync(Guid Id);
         public Task<Budget> GetBudgetWithDate(Guid id);
+        public Task<List<Budget>> GetSelectedDateBudgetsAsync(Guid id, int month, int year);
     }
 }

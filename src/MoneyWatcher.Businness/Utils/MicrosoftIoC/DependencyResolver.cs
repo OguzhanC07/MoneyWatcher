@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MoneyWatcher.Businness.Abstract;
 using MoneyWatcher.Businness.Concrete;
 using MoneyWatcher.Businness.JwtTools;
+using MoneyWatcher.Businness.Utils.Dtos.BudgetDateDto;
 using MoneyWatcher.Businness.Utils.Dtos.BudgetDto;
 using MoneyWatcher.Businness.Utils.Dtos.UserDto;
 using MoneyWatcher.Businness.Utils.FluentValidation;
@@ -32,6 +33,7 @@ namespace MoneyWatcher.Businness.Utils.MicrosoftIoC
             services.AddTransient<IValidator<LoginDto>, LoginDtoValidation>();
             services.AddTransient<IValidator<BudgetAddDto>, BudgetAddDtoValidation>();
             services.AddTransient<IValidator<BudgetUpdateDto>,BudgetUpdateDtoValidation>();
+            services.AddTransient<IValidator<DateDto>, DateDtoValidation>();
 
             services.AddScoped<IJwtService, JwtManager>();
         }
