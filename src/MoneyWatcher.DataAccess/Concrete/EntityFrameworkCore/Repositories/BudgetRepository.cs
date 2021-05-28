@@ -19,6 +19,8 @@ namespace MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Repositories
 
         public async Task<List<Budget>> GetSelectedDateBudgetsAsync(Guid id, int month, int year)
         {
+	        DateTime firstDateOfMonth = new DateTime(year, month, 1);
+	        DateTime lastDateOfMonth = firstDateOfMonth.AddMonths(1).Subtract(TimeSpan.FromSeconds(1));
             await using var context = new MoneyWatcherDbContext();
             return await context.Budgets
                 .Include(I => I.BudgetDate)
@@ -27,8 +29,8 @@ namespace MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Repositories
                     I.BudgetDate.StartDate.Month == month
                     && I.BudgetDate.StartDate.Year==year
                     || I.BudgetDate.IsMonthly == true
-                    && month <= I.BudgetDate.FinishDate.Value.Month
-                    && year==I.BudgetDate.FinishDate.Value.Year
+                    && lastDateOfMonth >= I.BudgetDate.StartDate
+                    && firstDateOfMonth <= I.BudgetDate.FinishDate.Value
                     )
                 .ToListAsync();
         }
