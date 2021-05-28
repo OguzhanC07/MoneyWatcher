@@ -53,7 +53,7 @@ namespace MoneyWatcher.Web.Controllers.Api
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetBudgetsWithDate(DateDto date)
+        public async Task<IActionResult> GetBudgetsWithDate([FromQuery] DateDto date)
         {
             var result = _mapper.Map<List<BudgetDetailDto>>(
                 await _budgetService.GetSelectedDateBudgetsAsync(
