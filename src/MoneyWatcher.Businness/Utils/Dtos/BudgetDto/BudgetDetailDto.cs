@@ -13,5 +13,6 @@ namespace MoneyWatcher.Businness.Utils.Dtos.BudgetDto
         public string Detail { get; set; }
         public bool BudgetType { get; set; }
         public BudgetDateDetailDto BudgetDate { get; set; }
+        public int CategoryId { get; set; }
     }
 }
