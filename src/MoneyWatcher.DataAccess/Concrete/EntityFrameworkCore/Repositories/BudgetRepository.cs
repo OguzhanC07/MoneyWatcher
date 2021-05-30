@@ -19,8 +19,8 @@ namespace MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Repositories
 
         public async Task<List<Budget>> GetSelectedDateBudgetsAsync(Guid id, int month, int year)
         {
-	        DateTime firstDateOfMonth = new DateTime(year, month, 1);
-	        DateTime lastDateOfMonth = firstDateOfMonth.AddMonths(1).Subtract(TimeSpan.FromSeconds(1));
+	        var firstDateOfMonth = new DateTime(year, month, 1);
+	        var lastDateOfMonth = firstDateOfMonth.AddMonths(1).Subtract(TimeSpan.FromSeconds(1));
             await using var context = new MoneyWatcherDbContext();
             return await context.Budgets
                 .Include(I => I.BudgetDate)
@@ -28,27 +28,36 @@ namespace MoneyWatcher.DataAccess.Concrete.EntityFrameworkCore.Repositories
                 .Where(I =>
                     I.BudgetDate.StartDate.Month == month
                     && I.BudgetDate.StartDate.Year==year
-                    || I.BudgetDate.IsMonthly == true
+                    || I.BudgetDate.IsMonthly 
                     && lastDateOfMonth >= I.BudgetDate.StartDate
                     && firstDateOfMonth <= I.BudgetDate.FinishDate.Value
                     )
                 .ToListAsync();
         }
 
-        public async Task<List<Budget>> GetSelectedDateTimeBudgetsAsync(Guid id, DateTime startDate,
-            DateTime finishDate)
+        
+        //This method ONLY GETS ONE TIME BUDGETS NOT MONTHLY BUDGETS
+        public async Task<object> GetSelectedYearMonthlyDataAsnyc(Guid id)
         {
             await using var context = new MoneyWatcherDbContext();
-            
-            return await context.Budgets.Include(I => I.BudgetDate)
+            var results = await context.Budgets
+                .Include(I => I.BudgetDate)
                 .Where(I => I.UserId == id)
-                .Where(I=> 
-                    I.BudgetDate.StartDate>=startDate
-                    && I.BudgetDate.FinishDate.Value.Month<=finishDate.Month
-                    && I.BudgetDate.FinishDate.Value.Year<=finishDate.Year
-                    
-                    )
+                .Where(I =>
+                    I.BudgetDate.StartDate.Year == DateTime.Now.Year
+                    // || I.BudgetDate.IsMonthly
+                    // && I.BudgetDate.FinishDate.Value.Year >= DateTime.Now.Year
+                ).
+                GroupBy(I=>new {StartDate= I.BudgetDate.StartDate.Month, I.BudgetType})
+                .Select(I=>new
+                {
+                    I.Key.StartDate,
+                    Income =I.Key.BudgetType ? I.Sum(a=>a.Price): 0,
+                    OutCome= I.Key.BudgetType==false ? I.Sum(a=>a.Price):0
+                })
                 .ToListAsync();
+            return new {MonthlyData = results};
         }
+        
     }
 }

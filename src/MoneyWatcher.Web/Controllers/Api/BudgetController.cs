@@ -40,6 +40,13 @@ namespace MoneyWatcher.Web.Controllers.Api
             return Ok(ResponseCreater.CreateResponse(true,"Operation completed successfully",_mapper.Map<BudgetDetailDto>(budget)));
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetThisYearMonthlyData()
+        {
+            var budget = await _budgetService.GetSelectedYearMonthlyDataAsnyc(new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+            return Ok(ResponseCreater.CreateResponse(true,"Your operation completed",budget));
+        }
+        
         [HttpGet]
         public async Task<IActionResult> GetBudgets()
         {
@@ -63,9 +70,6 @@ namespace MoneyWatcher.Web.Controllers.Api
             return Ok(ResponseCreater.CreateResponse(true, "Your operation completed successfully", result));
         }
         
-        
-        
-        
         [HttpPost]
         public async Task<IActionResult> AddBudget(BudgetAddDto budget)
         {
@@ -78,17 +82,8 @@ namespace MoneyWatcher.Web.Controllers.Api
         public async Task<IActionResult> UpdateBudget(BudgetUpdateDto updateDto)
         {
             var findBudget = await _budgetService.GetBudgetWithDate(updateDto.Id);
-
-            findBudget.BudgetDate.IsMonthly = updateDto.BudgetDate.IsMonthly;
-            findBudget.BudgetDate.StartDate = updateDto.BudgetDate.StartDate;
-            findBudget.BudgetDate.FinishDate = updateDto.BudgetDate.FinishDate;
-            findBudget.Detail = updateDto.Detail;
-            findBudget.Name = updateDto.Name;
-            findBudget.Price = updateDto.Price;
-            findBudget.CategoryId = updateDto.CategoryId;
-            findBudget.BudgetType = updateDto.BudgetType;
-
-            await _budgetService.UpdateAsync(findBudget);
+            var updatedBudget = _mapper.Map(updateDto, findBudget);
+            await _budgetService.UpdateAsync(updatedBudget);
             return Ok(ResponseCreater.CreateResponse(true, "Update successfully", updateDto));
         }
 

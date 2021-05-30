@@ -24,5 +24,10 @@ namespace MoneyWatcher.Businness.Concrete
         {
             return await _budgetDal.GetSelectedDateBudgetsAsync(id, month, year);
         }
+
+        public async Task<object> GetSelectedYearMonthlyDataAsnyc(Guid id)
+        {
+            return await _budgetDal.GetSelectedYearMonthlyDataAsnyc(id);
+        }
     }
 }

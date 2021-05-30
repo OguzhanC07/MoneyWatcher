@@ -9,5 +9,6 @@ namespace MoneyWatcher.DataAccess.Abstract
     {
         public Task<Budget> GetBudgetWithDate(Guid id);
         public Task<List<Budget>> GetSelectedDateBudgetsAsync(Guid id, int month, int year);
+        Task<object> GetSelectedYearMonthlyDataAsnyc(Guid id);
     }
 }
