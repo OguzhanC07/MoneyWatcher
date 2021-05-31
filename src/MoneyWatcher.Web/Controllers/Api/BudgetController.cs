@@ -34,7 +34,7 @@ namespace MoneyWatcher.Web.Controllers.Api
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetBudget(IdModel model)
+        public async Task<IActionResult> GetBudget([FromQuery] IdModel model)
         {
             var budget=await _budgetService.GetBudgetWithDate(model.Id);
             return Ok(ResponseCreater.CreateResponse(true,"Operation completed successfully",_mapper.Map<BudgetDetailDto>(budget)));
